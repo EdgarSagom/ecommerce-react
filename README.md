@@ -4,6 +4,8 @@ npm install
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 npm i react-router-dom
+npm i @headlessui/react
+npm i react-icons --save
 
 # React + Vite
 
