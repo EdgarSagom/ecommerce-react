@@ -6,6 +6,8 @@ npx tailwindcss init -p
 npm i react-router-dom
 npm i @headlessui/react
 npm i react-icons --save
+npm i framer-motion
+npm i react-type-animation
 
 # React + Vite
 
