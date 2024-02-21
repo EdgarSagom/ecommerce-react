@@ -81,8 +81,8 @@ function BannerSection () {
               viewport={{ once: false, amount: 0.7 }}
               className='flex max-w-max gap-x-6 items-center mb-8 mx-auto lg:mx-0'
             >
-              <button className='bg-orange-600 hover:bg-amber-900 text-white font-bold py-2 px-4 opacity-50 rounded-full'>Login</button>
-              <button className='bg-orange-600 hover:bg-amber-900 text-white font-bold py-2 px-4 opacity-50 rounded-full'>Logout</button>
+              <button className='bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 opacity-50 rounded-full'>Login</button>
+              <button className='bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 opacity-50 rounded-full'>Logout</button>
             </motion.div>
 
             {/* Socials */}
