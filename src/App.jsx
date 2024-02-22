@@ -8,6 +8,7 @@ import Cart from './pages/cart/Cart'
 import Dashboard from './pages/admin/dashboard/Dashboard'
 import Login from './pages/registration/Login'
 import Signup from './pages/registration/Signup'
+import ProductInfo from './pages/productInfo/ProductInfo'
 import NoPage from './pages/noPage/NoPage'
 
 function App () {
@@ -21,6 +22,7 @@ function App () {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/product/:id' element={<ProductInfo />} />
           <Route path='/*' element={<NoPage />} />
         </Routes>
       </Router>
