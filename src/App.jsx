@@ -9,6 +9,8 @@ import Dashboard from './pages/admin/dashboard/Dashboard'
 import Login from './pages/registration/Login'
 import Signup from './pages/registration/Signup'
 import ProductInfo from './pages/productInfo/ProductInfo'
+import AddProduct from './pages/admin/pages/AddProduct'
+import UpdateProduct from './pages/admin/pages/UpdateProduct'
 import NoPage from './pages/noPage/NoPage'
 
 function App () {
@@ -23,6 +25,8 @@ function App () {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/product/:id' element={<ProductInfo />} />
+          <Route path='/addproduct' element={<AddProduct />} />
+          <Route path='/updateproduct' element={<UpdateProduct />} />
           <Route path='/*' element={<NoPage />} />
         </Routes>
       </Router>
