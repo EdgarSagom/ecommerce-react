@@ -8,6 +8,7 @@ npm i @headlessui/react
 npm i react-icons --save
 npm i framer-motion
 npm i react-type-animation
+npm i react-tabs
 
 # React + Vite
 

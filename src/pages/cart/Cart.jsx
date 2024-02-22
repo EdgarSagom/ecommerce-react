@@ -14,7 +14,7 @@ function Cart () {
   return (
     <Layout>
       <div
-        className='h-screen pt-5 mb-[60%] lg:mb-[30%]'
+        className='py-5 my-8'
         style={{ color: mode === 'dark' ? 'white' : '' }}
       >
         <h1 className='mb-10 text-center text-2xl font-bold'>Cart Items</h1>
