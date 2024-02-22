@@ -9,6 +9,7 @@ npm i react-icons --save
 npm i framer-motion
 npm i react-type-animation
 npm i react-tabs
+npm install @reduxjs/toolkit react-redux
 
 # React + Vite
 
