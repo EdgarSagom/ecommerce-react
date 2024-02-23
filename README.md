@@ -11,6 +11,7 @@ npm i react-type-animation
 npm i react-tabs
 npm install @reduxjs/toolkit react-redux
 npm install firebase
+npm i react-toastify
 
 # React + Vite
 
