@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import myContext from '../../../context/data/myContext'
 import { motion } from 'framer-motion'
@@ -13,6 +14,11 @@ import { FiEdit } from 'react-icons/fi'
 function DashboardTab () {
   const context = useContext(myContext)
   const { mode } = context
+  const navigate = useNavigate()
+
+  const add = () => {
+    navigate('/addproduct')
+  }
 
   return (
     <>
@@ -73,6 +79,7 @@ function DashboardTab () {
 
                 <div className=' flex justify-end'>
                   <button
+                    onClick={add}
                     type='button'
                     className='focus:outline-none text-white bg-orange-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] border hover:bg-orange-800 outline-0 font-medium rounded-lg text-sm px-5 py-2.5 mb-2'
                   >

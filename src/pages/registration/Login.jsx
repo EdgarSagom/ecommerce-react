@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import myContext from '../../context/data/myContext'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebase/FirebaseConfig'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import Loader from '../../components/loader/Loader'
 
 function Login () {
@@ -86,6 +86,8 @@ function Login () {
           <h2 className='text-white'>Don't have an account <Link className='font-bold text-orange-600 hover:text-orange-800' to='/signup'>Signup</Link></h2>
         </div>
       </div>
+
+      <ToastContainer />
     </div>
   )
 }
