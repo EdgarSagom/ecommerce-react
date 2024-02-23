@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable react/jsx-indent */
 import { Fragment, useContext, useState } from 'react'
 import myContext from '../../context/data/myContext'
 import { Dialog, Transition } from '@headlessui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import logoImg from '../../../public/logo-eSagom.png'
 import { RxCross2 } from 'react-icons/rx'
@@ -15,6 +17,17 @@ function Navbar () {
   const { mode, toggleMode } = context
 
   const [open, setOpen] = useState(false)
+
+  const user = JSON.parse(localStorage.getItem('user'))
+
+  const navigate = useNavigate()
+
+  // console.log(user.user.email)
+
+  const logout = () => {
+    localStorage.clear('user')
+    navigate('/login')
+  }
 
   return (
     <div className='bg-white sticky top-0 z-50'>
@@ -60,24 +73,36 @@ function Navbar () {
                   <Link to='/allproducts' className='text-sm hover:text-orange-600'>
                     All Products
                   </Link>
-                  <div className='flow-root hover:text-orange-600'>
-                    <Link to='/order' className='-m-2 block p-2'>
-                      Order
-                    </Link>
-                  </div>
 
-                  <div className='flow-root'>
-                    <Link to='/dashboard' className='-m-2 block p-2 hover:text-orange-600'>
-                      admin
-                    </Link>
-                  </div>
+                  {user
+                    ? <div className='flow-root hover:text-orange-600'>
+                      <Link to='/order' className='-m-2 block p-2'>
+                        Order
+                      </Link>
+                    </div>
+                    : ''}
 
-                  <div className='flow-root'>
-                    <a className='-m-2 block p-2 hover:text-orange-600 cursor-pointer'>
-                      Logout
-                    </a>
-                  </div>
-                  <div className='flow-root'>
+                  {user?.user?.email === 'esagom@gmail.com'
+                    ? <div className='flow-root'>
+                      <Link to='/dashboard' className='-m-2 block p-2 hover:text-orange-600'>
+                        admin
+                      </Link>
+                    </div>
+                    : ''}
+
+                  {user
+                    ? <div className='flow-root'>
+                      <a
+                        onClick={logout}
+                        className='-m-2 block p-2 hover:text-orange-600 cursor-pointer'
+                      >
+                        Logout
+                      </a>
+                    </div>
+                    : ''}
+
+                  {user
+                    ? <div className='flow-root'>
                     <Link to='/' className='-m-2 block p-2 cursor-pointer'>
                       <img
                         className='inline-block w-10 h-10 rounded-full'
@@ -86,18 +111,19 @@ function Navbar () {
                       />
                     </Link>
                   </div>
+                    : ''}
                 </div>
 
                 <div className='border-t border-gray-200 px-4 py-6'>
-                  <a href='#' className='-m-2 flex items-center p-2'>
+                  <Link to='/' className='-m-2 flex items-center p-2'>
                     <img
                       src='https://s1.1zoom.me/b5050/706/339091-Berserker_2560x1440.jpg'
-                      alt=''
+                      alt='Flag of Mexico'
                       className='block h-auto w-5 flex-shrink-0'
                     />
                     <span className='ml-3 block text-base font-medium text-gray-900' style={{ color: mode === 'dark' ? 'white' : '' }}>MEXICO</span>
                     <span className='sr-only'>, change currency</span>
-                  </a>
+                  </Link>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -140,38 +166,52 @@ function Navbar () {
                   <Link to='/allproducts' className='hover:text-orange-600'>
                     All Products
                   </Link>
-                  <Link to='/order' className='hover:text-orange-600'>
-                    Order
-                  </Link>
-                  <Link to='/dashboard' className='hover:text-orange-600'>
-                    Admin
-                  </Link>
 
-                  <a className='hover:text-orange-600 cursor-pointer'>
-                    Logout
-                  </a>
+                  {user
+                    ? <Link to='/order' className='hover:text-orange-600'>
+                      Order
+                      </Link>
+                    : ''}
+
+                  {user?.user?.email === 'esagom@gmail.com'
+                    ? <Link to='/dashboard' className='hover:text-orange-600'>
+                      Admin
+                      </Link>
+                    : ''}
+
+                  {user
+                    ? <a
+                        onClick={logout}
+                        className='hover:text-orange-600 cursor-pointer'
+                      >
+                      Logout
+                      </a>
+                    : ''}
                 </div>
 
                 {/* Profile */}
                 <div className='hidden lg:ml-8 lg:flex'>
-                  <a href='#' className='flex items-center text-gray-700 '>
+                  <Link to='/' className='flex items-center text-gray-700 '>
                     <img
                       src='https://s1.1zoom.me/b5050/706/339091-Berserker_2560x1440.jpg'
-                      alt='Mexico flag'
+                      alt='Flag of Mexico'
                       className='block h-auto w-5 flex-shrink-0'
                     />
                     <span className='ml-3 block text-sm font-medium' style={{ color: mode === 'dark' ? 'white' : '' }}>MEXICO</span>
-                  </a>
+                  </Link>
                 </div>
-                <div className='hidden lg:ml-8 lg:flex'>
-                  <a href='#' className='flex items-center text-gray-700 '>
+
+                {user
+                  ? <div className='hidden lg:ml-8 lg:flex'>
+                  <Link className='flex items-center text-gray-700 '>
                     <img
                       className='inline-block w-10 h-10 rounded-full'
                       src='https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-File.png'
                       alt='Profile picture'
                     />
-                  </a>
+                  </Link>
                 </div>
+                  : ''}
 
                 {/* Toggle Buttom */}
                 <div className='flex lg:ml-6'>
