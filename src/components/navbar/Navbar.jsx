@@ -4,6 +4,7 @@ import { Fragment, useContext, useState } from 'react'
 import myContext from '../../context/data/myContext'
 import { Dialog, Transition } from '@headlessui/react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import logoImg from '../../../public/logo-eSagom.png'
 import { RxCross2 } from 'react-icons/rx'
@@ -28,6 +29,8 @@ function Navbar () {
     localStorage.clear('user')
     navigate('/login')
   }
+
+  const cartItems = useSelector((state) => state.cart)
 
   return (
     <div className='bg-white sticky top-0 z-50'>
@@ -229,10 +232,16 @@ function Navbar () {
 
                 {/* Cart */}
                 <div className='ml-4 flow-root lg:ml-6'>
-                  <Link to='/cart' className='group -m-2 flex items-center p-2 hover:text-orange-600' style={{ color: mode === 'dark' ? 'white' : '' }}>
-                    <IoMdCart className='w-6 h-6' />
+                  <Link
+                    to='/cart'
+                    className='group -m-2 flex items-center p-2'
+                    style={{ color: mode === 'dark' ? 'white' : '' }}
+                  >
+                    <IoMdCart className={`w-6 h-6 hover:text-orange-800 ${cartItems.length > 0 ? 'text-orange-600' : ''}`} />
 
-                    <span className='ml-2 text-sm font-medium text-gray-700' style={{ color: mode === 'dark' ? 'white' : '' }}>0</span>
+                    <span
+                      className={`ml-2 text-sm font-medium ${cartItems.length > 0 ? 'text-orange-600' : 'text-gray-500'}`}
+                    >{cartItems.length}</span>
                     <span className='sr-only'>items in cart, view bag</span>
                   </Link>
                 </div>
