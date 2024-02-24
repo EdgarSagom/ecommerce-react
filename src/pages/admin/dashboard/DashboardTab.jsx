@@ -13,7 +13,8 @@ import { FiEdit } from 'react-icons/fi'
 
 function DashboardTab () {
   const context = useContext(myContext)
-  const { mode } = context
+  const { mode, product } = context
+  // console.log(product)
   const navigate = useNavigate()
 
   const add = () => {
@@ -115,63 +116,78 @@ function DashboardTab () {
                           Date
                         </th>
                         <th scope='col' className='px-6 py-3'>
+                          Description
+                        </th>
+                        <th scope='col' className='px-6 py-3'>
                           Action
                         </th>
                       </tr>
                     </thead>
 
-                    <tbody className=''>
-                      <tr
-                        className='bg-gray-50 border-b dark:border-gray-700'
-                        style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        <td
-                          className='px-6 py-4 text-black'
-                          style={{ color: mode === 'dark' ? 'white' : '' }}
-                        >
-                          1.
-                        </td>
-                        <th scope='row' className='px-6 py-4 font-medium text-black whitespace-nowrap'>
-                          <img className='w-16' src='https://dummyimage.com/720x400' alt='img' />
-                        </th>
-                        <td
-                          className='px-6 py-4 text-black'
-                          style={{ color: mode === 'dark' ? 'white' : '' }}
-                        >
-                          Title
-                        </td>
-                        <td
-                          className='px-6 py-4 text-black'
-                          style={{ color: mode === 'dark' ? 'white' : '' }}
-                        >
-                          $1,407.54
-                        </td>
-                        <td
-                          className='px-6 py-4 text-black'
-                          style={{ color: mode === 'dark' ? 'white' : '' }}
-                        >
-                          mobile
-                        </td>
-                        <td
-                          className='px-6 py-4 text-black'
-                          style={{ color: mode === 'dark' ? 'white' : '' }}
-                        >
-                          22 Feb 2024
-                        </td>
-                        <td className='px-6 py-4'>
-                          <div className=' flex gap-2'>
-                            <div className=' flex gap-2 cursor-pointer text-black ' style={{ color: mode === 'dark' ? 'white' : '' }}>
-                              <div>
-                                <IoTrashOutline className='w-6 h-6' />
+                    {product.map((item, index) => {
+                      const { title, price, imageUrl, category, description, date } = item
+                      return (
+                        <tbody className='' key={index}>
+                          <tr
+                            className='bg-gray-50 border-b dark:border-gray-700'
+                            style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
+                          >
+                            <td
+                              className='px-6 py-4 text-black'
+                              style={{ color: mode === 'dark' ? 'white' : '' }}
+                            >
+                              {index + 1}.
+                            </td>
+                            <th scope='row' className='px-6 py-4 font-medium text-black whitespace-nowrap'>
+                              <img className='w-16' src={imageUrl} alt={title} />
+                            </th>
+                            <td
+                              className='px-6 py-4 text-black'
+                              style={{ color: mode === 'dark' ? 'white' : '' }}
+                            >
+                              {title}
+                            </td>
+                            <td
+                              className='px-6 py-4 text-black'
+                              style={{ color: mode === 'dark' ? 'white' : '' }}
+                            >
+                              ${price}
+                            </td>
+                            <td
+                              className='px-6 py-4 text-black'
+                              style={{ color: mode === 'dark' ? 'white' : '' }}
+                            >
+                              {category}
+                            </td>
+                            <td
+                              className='px-6 py-4 text-black'
+                              style={{ color: mode === 'dark' ? 'white' : '' }}
+                            >
+                              {date}
+                            </td>
+                            <td
+                              className='px-6 py-4 text-black'
+                              style={{ color: mode === 'dark' ? 'white' : '' }}
+                            >
+                              {description.slice(0, 20)}...
+                            </td>
+                            <td className='px-6 py-4'>
+                              <div className=' flex gap-2'>
+                                <div className=' flex gap-2 cursor-pointer text-black ' style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                  <div>
+                                    <IoTrashOutline className='w-6 h-6' />
+                                  </div>
+                                  <div>
+                                    <FiEdit className='w-6 h-6' />
+                                  </div>
+                                </div>
                               </div>
-                              <div>
-                                <FiEdit className='w-6 h-6' />
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
+                            </td>
+                          </tr>
+                        </tbody>
+                      )
+                    })}
+
                   </table>
                 </div>
               </motion.div>
