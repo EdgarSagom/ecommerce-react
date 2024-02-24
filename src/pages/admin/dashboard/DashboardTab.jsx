@@ -1,9 +1,10 @@
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import myContext from '../../../context/data/myContext'
 import { motion } from 'framer-motion'
 import { fadeIn } from '../../../variants'
+import { ToastContainer } from 'react-toastify'
 
 import { MdOutlineProductionQuantityLimits } from 'react-icons/md'
 import { AiFillShopping } from 'react-icons/ai'
@@ -13,7 +14,7 @@ import { FiEdit } from 'react-icons/fi'
 
 function DashboardTab () {
   const context = useContext(myContext)
-  const { mode, product } = context
+  const { mode, product, editHandle, deleteProduct } = context
   // console.log(product)
   const navigate = useNavigate()
 
@@ -173,13 +174,25 @@ function DashboardTab () {
                             </td>
                             <td className='px-6 py-4'>
                               <div className=' flex gap-2'>
-                                <div className=' flex gap-2 cursor-pointer text-black ' style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                  <div>
+                                <div
+                                  className='flex gap-2 cursor-pointer text-black'
+                                  style={{ color: mode === 'dark' ? 'white' : '' }}
+                                >
+                                  <div
+                                    className='hover:text-orange-600'
+                                    onClick={() => deleteProduct(item)}
+                                  >
                                     <IoTrashOutline className='w-6 h-6' />
                                   </div>
-                                  <div>
-                                    <FiEdit className='w-6 h-6' />
-                                  </div>
+
+                                  <Link to='/updateproduct'>
+                                    <div
+                                      className='hover:text-orange-600'
+                                      onClick={() => editHandle(item)}
+                                    >
+                                      <FiEdit className='w-6 h-6' />
+                                    </div>
+                                  </Link>
                                 </div>
                               </div>
                             </td>
@@ -188,6 +201,7 @@ function DashboardTab () {
                       )
                     })}
 
+                    <ToastContainer />
                   </table>
                 </div>
               </motion.div>

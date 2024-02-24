@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import MyContext from './myContext'
-import { Timestamp, addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { Timestamp, addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import { fireDB } from '../../firebase/FirebaseConfig'
 
@@ -36,7 +36,7 @@ function MyState (props) {
     )
   })
 
-  // **** Add Product Section **** //
+  // **** add Product Section **** //
   const addProduct = async () => {
     if (products.title == null || products.price == null || products.imageUrl == null || products.category == null || products.description == null) {
       return toast.error('Please fill all fields')
@@ -93,8 +93,46 @@ function MyState (props) {
     getProductData()
   }, [])
 
+  // **** delete and update Product Section **** //
+  const editHandle = (item) => {
+    setProducts(item)
+  }
+
+  // * delete Product * //
+  const deleteProduct = async (item) => {
+    setLoading(true)
+
+    try {
+      await deleteDoc(doc(fireDB, 'products', item.id))
+      toast.success('Product Deleted successful')
+      getProductData()
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+
+  // * update Product * //
+  const updateProduct = async () => {
+    setLoading(true)
+
+    try {
+      await setDoc(doc(fireDB, 'products', products.id), products)
+      toast.success('Product Updated successful')
+      setTimeout(() => {
+        window.location.href = '/dashboard'
+      }, 800)
+      getProductData()
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+
   return (
-    <MyContext.Provider value={{ mode, toggleMode, loading, setLoading, products, setProducts, addProduct, product }}>
+    <MyContext.Provider value={{ mode, toggleMode, loading, setLoading, products, setProducts, addProduct, product, editHandle, deleteProduct, updateProduct }}>
       {props.children}
     </MyContext.Provider>
   )
