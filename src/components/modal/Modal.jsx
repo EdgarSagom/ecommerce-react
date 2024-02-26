@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-export default function Modal () {
+export default function Modal ({ name, address, pincode, phoneNumber, setName, setAddress, setPincode, setPhoneNumber, buyNow }) {
   const [isOpen, setIsOpen] = useState(false)
 
   function openModal () {
@@ -11,6 +12,8 @@ export default function Modal () {
   function closeModal () {
     setIsOpen(false)
   }
+
+  // console.log(name,address,pincode,phoneNumber)
 
   return (
     <>
@@ -62,6 +65,8 @@ export default function Modal () {
                               >Enter Full Name
                               </label>
                               <input
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 type='name'
                                 name='name'
                                 id='name'
@@ -77,6 +82,8 @@ export default function Modal () {
                               >Enter Full Address
                               </label>
                               <input
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
                                 type='text'
                                 name='address'
                                 id='address'
@@ -92,6 +99,8 @@ export default function Modal () {
                               >Enter Pincode
                               </label>
                               <input
+                                value={pincode}
+                                onChange={(e) => setPincode(e.target.value)}
                                 type='text'
                                 name='pincode'
                                 id='pincode'
@@ -107,6 +116,8 @@ export default function Modal () {
                               >Enter Mobile Number
                               </label>
                               <input
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
                                 type='text'
                                 name='mobileNumber'
                                 id='mobileNumber'
@@ -117,8 +128,11 @@ export default function Modal () {
                           </form>
 
                           <button
+                            onClick={() => {
+                              buyNow()
+                              closeModal()
+                            }}
                             type='button'
-                            onClick={closeModal}
                             className='focus:outline-none w-full text-white bg-orange-600 hover:bg-orange-800  outline-0 font-medium rounded-lg text-sm px-5 py-2.5 '
                           >Order Now
                           </button>

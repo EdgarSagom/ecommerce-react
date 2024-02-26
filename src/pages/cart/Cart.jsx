@@ -6,6 +6,8 @@ import { fadeIn } from '../../variants'
 import Modal from '../../components/modal/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFromCart } from '../../redux/cartSlice'
+import { addDoc, collection } from 'firebase/firestore'
+import { fireDB } from '../../firebase/FirebaseConfig'
 
 import { IoTrashOutline } from 'react-icons/io5'
 import { toast, ToastContainer } from 'react-toastify'
@@ -17,7 +19,7 @@ function Cart () {
   const dispatch = useDispatch()
 
   const cartItems = useSelector((state) => state.cart)
-  console.log(cartItems)
+  // console.log(cartItems)
 
   const deleteCart = (item) => {
     dispatch(deleteFromCart(item))
@@ -43,6 +45,70 @@ function Cart () {
 
   const grandTotal = shipping + totalAmout
   // console.log(grandTotal)
+
+  const [name, setName] = useState('')
+  const [address, setAddress] = useState('')
+  const [pincode, setPincode] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+
+  const buyNow = async () => {
+    // validation
+    if (name === '' || address === '' || pincode === '' || phoneNumber === '') {
+      return toast.error('All fields are required', {
+        position: 'top-center',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      })
+    }
+
+    try {
+      const addressInfo = {
+        name,
+        address,
+        pincode,
+        phoneNumber,
+        date: new Date().toLocaleString(
+          'en-US',
+          {
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric'
+          }
+        )
+      }
+
+      const orderInfo = {
+        cartItems,
+        addressInfo,
+        date: new Date().toLocaleString(
+          'en-US',
+          {
+            month: 'short',
+            day: '2-digit',
+            year: 'numeric'
+          }
+        ),
+        email: JSON.parse(localStorage.getItem('user')).user.email,
+        userid: JSON.parse(localStorage.getItem('user')).user.uid
+      }
+      const orderRef = collection(fireDB, 'orders')
+      addDoc(orderRef, orderInfo)
+      // console.log(orderInfo)
+      setName('')
+      setAddress('')
+      setPincode('')
+      setPhoneNumber('')
+    } catch (error) {
+      console.log(error)
+    }
+
+    toast.success('Payment Successful')
+  }
 
   return (
     <Layout>
@@ -142,7 +208,17 @@ function Cart () {
               </div>
             </div>
 
-            <Modal />
+            <Modal
+              name={name}
+              address={address}
+              pincode={pincode}
+              phoneNumber={phoneNumber}
+              setName={setName}
+              setAddress={setAddress}
+              setPincode={setPincode}
+              setPhoneNumber={setPhoneNumber}
+              buyNow={buyNow}
+            />
           </motion.div>
         </div>
       </div>
