@@ -1,15 +1,48 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import myContext from '../../context/data/myContext'
 import Layout from '../../components/layout/Layout'
 import { motion } from 'framer-motion'
 import { fadeIn } from '../../variants'
 import Modal from '../../components/modal/Modal'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteFromCart } from '../../redux/cartSlice'
 
 import { IoTrashOutline } from 'react-icons/io5'
+import { toast, ToastContainer } from 'react-toastify'
 
 function Cart () {
   const context = useContext(myContext)
   const { mode } = context
+
+  const dispatch = useDispatch()
+
+  const cartItems = useSelector((state) => state.cart)
+  console.log(cartItems)
+
+  const deleteCart = (item) => {
+    dispatch(deleteFromCart(item))
+    toast.success('Delete Cart')
+  }
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cartItems))
+  }, [cartItems])
+
+  const [totalAmout, setTotalAmout] = useState(0)
+
+  useEffect(() => {
+    let temp = 0
+    cartItems.forEach((cartItem) => {
+      temp = temp + parseInt(cartItem.price)
+    })
+    setTotalAmout(temp)
+    // console.log(temp)
+  }, [cartItems])
+
+  const shipping = parseInt(20)
+
+  const grandTotal = shipping + totalAmout
+  // console.log(grandTotal)
 
   return (
     <Layout>
@@ -20,42 +53,52 @@ function Cart () {
         <h1 className='mb-10 text-center text-2xl font-bold'>Cart Items</h1>
         <div className='mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 '>
           <div className='rounded-lg md:w-2/3 '>
-            <motion.div
-              variants={fadeIn('up', 0.4)} initial='hidden'
-              whileInView='show'
-              className='justify-between mb-6 rounded-lg border  drop-shadow-xl bg-white p-6  sm:flex  sm:justify-start'
-              style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '' }}
-            >
-              <img
-                src='https://dummyimage.com/400x400'
-                alt='product-image'
-                className='w-full rounded-lg sm:w-40 object-cover object-center hover:scale-110 transition-scale-110 duration-300 ease-in-out'
-              />
+            {cartItems.map((item, index) => {
+              const { imageUrl, title, description, price } = item
 
-              <div className='sm:ml-4 sm:flex sm:w-full sm:justify-between'>
-                <div className='mt-5 sm:mt-0'>
-                  <h2
-                    className='text-lg font-bold'
-                    style={{ color: mode === 'dark' ? 'white' : '' }}
-                  >This is title:
-                  </h2>
-                  <h2
-                    className='text-sm'
-                    style={{ color: mode === 'dark' ? 'white' : '' }}
-                  >This is desc:
-                  </h2>
-                  <p
-                    className='mt-1 text-xs font-semibold text-gray-600'
-                    style={{ color: mode === 'dark' ? 'white' : '' }}
-                  >This is price: $1,407.54
-                  </p>
-                </div>
+              return (
+                <motion.div
+                  variants={fadeIn('up', 0.4)} initial='hidden'
+                  whileInView='show'
+                  key={index}
+                  className='items-center justify-between mb-6 rounded-lg border drop-shadow-xl bg-white p-6  sm:flex sm:justify-start'
+                  style={{ backgroundColor: mode === 'dark' ? 'rgb(32 33 34)' : '', color: mode === 'dark' ? 'white' : '' }}
+                >
+                  <img
+                    src={imageUrl}
+                    alt={title}
+                    className='w-full rounded-lg sm:w-40 object-cover object-center hover:scale-110 transition-scale-110 duration-300 ease-in-out'
+                  />
 
-                <div className='mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6'>
-                  <IoTrashOutline className='w-6 h-6 text-orange-800 hover:text-orange-600 cursor-pointer' />
-                </div>
-              </div>
-            </motion.div>
+                  <div className='sm:ml-4 sm:flex sm:w-full sm:justify-between'>
+                    <div className='mt-5 sm:mt-0'>
+                      <h2
+                        className='text-lg font-bold'
+                        style={{ color: mode === 'dark' ? 'white' : '' }}
+                      >{title}
+                      </h2>
+                      <h2
+                        className='text-sm'
+                        style={{ color: mode === 'dark' ? 'white' : '' }}
+                      >{description.length <= 225 ? description : `${description.slice(0, 225)}...`}
+                      </h2>
+                      <p
+                        className='mt-1 text-xs font-semibold text-gray-600'
+                        style={{ color: mode === 'dark' ? 'white' : '' }}
+                      >${price}
+                      </p>
+                    </div>
+
+                    <div
+                      onClick={() => deleteCart(item)}
+                      className='mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6'
+                    >
+                      <IoTrashOutline className='w-6 h-6 text-orange-800 hover:text-orange-600 cursor-pointer' />
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
           </div>
 
           <motion.div
@@ -69,7 +112,7 @@ function Cart () {
               <p
                 className='text-gray-600'
                 style={{ color: mode === 'dark' ? 'white' : '' }}
-              >$1,407.54
+              >${totalAmout}
               </p>
             </div>
 
@@ -78,7 +121,7 @@ function Cart () {
               <p
                 className='text-gray-600'
                 style={{ color: mode === 'dark' ? 'white' : '' }}
-              >$20
+              >{totalAmout === 0 || totalAmout >= 150 ? '$0' : `$${shipping}`}
               </p>
             </div>
 
@@ -94,7 +137,7 @@ function Cart () {
                 <p
                   className='mb-1 text-lg font-bold'
                   style={{ color: mode === 'dark' ? 'white' : '' }}
-                >$1,427.54
+                >{totalAmout === 0 ? '$0' : totalAmout >= 150 ? `$${totalAmout}` : `$${grandTotal}`}
                 </p>
               </div>
             </div>
@@ -103,6 +146,8 @@ function Cart () {
           </motion.div>
         </div>
       </div>
+
+      <ToastContainer />
     </Layout>
   )
 }

@@ -137,7 +137,7 @@ function Navbar () {
       {/* Desktop  */}
       <header className='relative bg-white'>
         <p className='flex h-10 items-center justify-center bg-orange-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8' style={{ backgroundColor: mode === 'dark' ? '#9a3412' : '', color: mode === 'dark' ? 'white' : '' }}>
-          Get free delivery on orders over $15
+          Get free delivery on orders over $150
         </p>
 
         <nav aria-label='Top' className='bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl ' style={{ backgroundColor: mode === 'dark' ? 'rgb(40, 44, 52)' : '', color: mode === 'dark' ? 'white' : '' }}>
