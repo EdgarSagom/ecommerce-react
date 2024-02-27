@@ -2,13 +2,15 @@ import { useContext } from 'react'
 import Layout from '../../components/layout/Layout'
 import myContext from '../../context/data/myContext'
 import Loader from '../../components/loader/Loader'
+import { motion } from 'framer-motion'
+import { fadeIn } from '../../variants'
 
 function Order () {
   const userid = JSON.parse(localStorage.getItem('user')).user.uid
   const context = useContext(myContext)
   const { mode, loading, order } = context
 
-  console.log(context)
+  // console.log(context)
 
   return (
     <Layout>
@@ -20,7 +22,9 @@ function Order () {
               {
               order.filter(obj => obj.userid === userid).map((order, index) => {
                 return (
-                  <div
+                  <motion.div
+                    variants={fadeIn('up', 0.4)} initial='hidden'
+                    whileInView='show'
                     key={index}
                     className='mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0'
                   >
@@ -70,7 +74,7 @@ function Order () {
                         )
                       })
                     }
-                  </div>
+                  </motion.div>
                 )
               })
             }
