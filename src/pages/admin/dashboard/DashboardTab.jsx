@@ -14,7 +14,7 @@ import { FiEdit } from 'react-icons/fi'
 
 function DashboardTab () {
   const context = useContext(myContext)
-  const { mode, product, editHandle, deleteProduct, order } = context
+  const { mode, product, editHandle, deleteProduct, order, user } = context
   // console.log(product)
   const navigate = useNavigate()
 
@@ -371,72 +371,50 @@ function DashboardTab () {
                         Name
                       </th>
                       <th scope='col' className='px-6 py-3'>
-                        Address
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Pincode
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Phone Number
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
                         Email
                       </th>
                       <th scope='col' className='px-6 py-3'>
-                        Date
+                        Uid
                       </th>
                     </tr>
                   </thead>
 
-                  <tbody>
-                    <tr
-                      className='bg-gray-50 border-b  dark:border-gray-700'
-                      style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
-                    >
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        1.
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        Name
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        Address
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black '
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        75757
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        555555555555
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        example@gmail.com
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        22 Feb 2024
-                      </td>
-                    </tr>
-                  </tbody>
+                  {user.map((item, index) => {
+                    const { name, email, uid } = item
+                    return (
+                      <tbody key={index}>
+                        <tr
+                          className='bg-gray-50 border-b  dark:border-gray-700'
+                          style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
+                        >
+                          <td
+                            className='px-6 py-4 text-black'
+                            style={{ color: mode === 'dark' ? 'white' : '' }}
+                          >
+                            {index + 1}.
+                          </td>
+                          <td
+                            className='px-6 py-4 text-black'
+                            style={{ color: mode === 'dark' ? 'white' : '' }}
+                          >
+                            {name}
+                          </td>
+                          <td
+                            className='px-6 py-4 text-black'
+                            style={{ color: mode === 'dark' ? 'white' : '' }}
+                          >
+                            {email}
+                          </td>
+                          <td
+                            className='px-6 py-4 text-black'
+                            style={{ color: mode === 'dark' ? 'white' : '' }}
+                          >
+                            {uid}
+                          </td>
+                        </tr>
+                      </tbody>
+                    )
+                  })}
                 </table>
               </motion.div>
             </TabPanel>
