@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import MyContext from './myContext'
-import { Timestamp, addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore'
+import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore'
 import { toast } from 'react-toastify'
 import { fireDB } from '../../firebase/FirebaseConfig'
 
@@ -131,8 +131,35 @@ function MyState (props) {
     }
   }
 
+  // **** get order Data Section **** //
+  const [order, setOrder] = useState([])
+
+  const getOrderData = async () => {
+    setLoading(true)
+
+    try {
+      const result = await getDocs(collection(fireDB, 'orders'))
+      const ordersArray = []
+      result.forEach((doc) => {
+        ordersArray.push(doc.data())
+        setLoading(false)
+      })
+
+      setOrder(ordersArray)
+      console.log(ordersArray)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getOrderData()
+  }, [])
+
   return (
-    <MyContext.Provider value={{ mode, toggleMode, loading, setLoading, products, setProducts, addProduct, product, editHandle, deleteProduct, updateProduct }}>
+    <MyContext.Provider value={{ mode, toggleMode, loading, setLoading, products, setProducts, addProduct, product, editHandle, deleteProduct, updateProduct, order }}>
       {props.children}
     </MyContext.Provider>
   )
