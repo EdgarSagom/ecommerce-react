@@ -14,7 +14,7 @@ import { FiEdit } from 'react-icons/fi'
 
 function DashboardTab () {
   const context = useContext(myContext)
-  const { mode, product, editHandle, deleteProduct } = context
+  const { mode, product, editHandle, deleteProduct, order } = context
   // console.log(product)
   const navigate = useNavigate()
 
@@ -216,119 +216,136 @@ function DashboardTab () {
               >
                 <h1 className='text-center mb-5 text-3xl font-semibold underline text-pink-600'>Order Details</h1>
 
-                <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
-                  <thead
-                    className='text-xs text-black uppercase bg-gray-200'
-                    style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
-                  >
-                    <tr>
-                      <th scope='col' className='px-6 py-3'>
-                        Payment Id
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Image
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Title
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Price
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Category
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Name
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Address
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Pincode
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Phone Number
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Email
-                      </th>
-                      <th scope='col' className='px-6 py-3'>
-                        Date
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr
-                      className='bg-gray-50 border-b dark:border-gray-700'
-                      style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
+                {order.map((allOrder, index) => {
+                  return (
+                    <table
+                      key={index}
+                      className='w-full text-sm text-left text-gray-500 dark:text-gray-400'
                     >
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
+                      <thead
+                        className='text-xs text-black uppercase bg-gray-200'
+                        style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
                       >
-                        3292929
-                      </td>
-                      <th scope='row' className='px-6 py-4 font-medium text-black whitespace-nowrap'>
-                        <img className='w-16' src='https://dummyimage.com/720x400' alt='img' />
-                      </th>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        Title
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        $1,407.54
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        mobile
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        name
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        mexico
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        75757
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        555555555555
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        exemple@gmail.com
-                      </td>
-                      <td
-                        className='px-6 py-4 text-black'
-                        style={{ color: mode === 'dark' ? 'white' : '' }}
-                      >
-                        22 Feb 2024
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        <tr>
+                          <th scope='col' className='px-6 py-3'>
+                            Payment Id
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Image
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Title
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Price
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Category
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Name
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Address
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Pincode
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Phone Number
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Email
+                          </th>
+                          <th scope='col' className='px-6 py-3'>
+                            Date
+                          </th>
+                        </tr>
+                      </thead>
+
+                      {allOrder.cartItems.map((item, index) => {
+                        // console.log(allOrder)
+                        const { imageUrl, title, price, category } = item
+                        return (
+                          <tbody key={index}>
+                            <tr
+                              className='bg-gray-50 border-b dark:border-gray-700'
+                              style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
+                            >
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                pay_{`${parseInt(allOrder.addressInfo.pincode * 500 / 3.5)}${allOrder.addressInfo.name.slice(0, 2)}`}
+                              </td>
+                              <th scope='row' className='px-6 py-4 font-medium text-black whitespace-nowrap'>
+                                <img
+                                  className='w-16'
+                                  src={imageUrl}
+                                  alt={title}
+                                />
+                              </th>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {title.length <= 55 ? title : `${title.slice(0, 50)}...`}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                ${price}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {category}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {allOrder.addressInfo.name}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {allOrder.addressInfo.address}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {allOrder.addressInfo.pincode}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {allOrder.addressInfo.phoneNumber}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {allOrder.email}
+                              </td>
+                              <td
+                                className='px-6 py-4 text-black'
+                                style={{ color: mode === 'dark' ? 'white' : '' }}
+                              >
+                                {allOrder.date}
+                              </td>
+                            </tr>
+                          </tbody>
+                        )
+                      })}
+                    </table>
+                  )
+                })}
               </motion.div>
             </TabPanel>
 
