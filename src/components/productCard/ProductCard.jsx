@@ -10,7 +10,7 @@ import logoImg from '../../../public/logo-eSagom.png'
 
 function ProductCard () {
   const context = useContext(myContext)
-  const { mode, product } = context
+  const { mode, product, searchKey, filterType, filterPrice } = context
 
   const dispatch = useDispatch()
 
@@ -39,7 +39,7 @@ function ProductCard () {
         </div>
 
         <div className='flex flex-wrap -m-4'>
-          {product.map((item, index) => {
+          {product.filter((obj) => obj.title.toLowerCase().includes(searchKey)).filter((obj) => obj.category.toLowerCase().includes(filterType)).filter((obj) => obj.price.includes(filterPrice)).map((item, index) => {
             const { imageUrl, title, description, price } = item
             return (
               <motion.div
