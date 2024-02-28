@@ -73,10 +73,6 @@ function Navbar () {
 
                 {/* Navigation Links */}
                 <div className='space-y-6 border-t border-gray-200 px-4 py-6 font-medium text-gray-900' style={{ color: mode === 'dark' ? 'white' : '' }}>
-                  <Link to='/allproducts' className='text-sm hover:text-orange-600'>
-                    All Products
-                  </Link>
-
                   {user
                     ? <div className='flow-root hover:text-orange-600'>
                       <Link to='/order' className='-m-2 block p-2'>
@@ -166,10 +162,6 @@ function Navbar () {
               {/* Navigation Links */}
               <div className='ml-auto flex items-center'>
                 <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 text-sm font-medium text-gray-700' style={{ color: mode === 'dark' ? 'white' : '' }}>
-                  <Link to='/allproducts' className='hover:text-orange-600'>
-                    All Products
-                  </Link>
-
                   {user
                     ? <Link to='/order' className='hover:text-orange-600'>
                       Order
