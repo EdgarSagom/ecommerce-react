@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import myContext from '../../context/data/myContext'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../redux/cartSlice'
@@ -40,7 +41,7 @@ function ProductCard () {
 
         <div className='flex flex-wrap -m-4'>
           {product.filter((obj) => obj.title.toLowerCase().includes(searchKey)).filter((obj) => obj.category.toLowerCase().includes(filterType)).filter((obj) => obj.price.includes(filterPrice)).map((item, index) => {
-            const { imageUrl, title, description, price } = item
+            const { imageUrl, title, description, price, id } = item
             return (
               <motion.div
                 key={index}
@@ -53,9 +54,12 @@ function ProductCard () {
                   className='h-full border-2 hover:shadow-gray-100 hover:shadow-2xl transition-shadow duration-300 ease-in-out border-gray-200 border-opacity-60 rounded-2xl overflow-hidden'
                   style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '' }}
                 >
-                  <div className='flex justify-center cursor-pointer'>
+                  <Link
+                    to={`/product/${id}`}
+                    className='flex justify-center cursor-pointer'
+                  >
                     <img className=' rounded-2xl w-full h-80 p-2 hover:scale-110 transition-scale-110  duration-300 ease-in-out' src={imageUrl} alt={title} />
-                  </div>
+                  </Link>
 
                   <div className='p-5 border-t-2'>
                     <div className='flex items-center'>
