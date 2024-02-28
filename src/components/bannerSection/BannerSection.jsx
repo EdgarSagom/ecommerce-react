@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-closing-tag-location */
 import { useContext } from 'react'
 import myContext from '../../context/data/myContext'
 import { motion } from 'framer-motion'
 import { fadeIn } from '../../variants'
 import { TypeAnimation } from 'react-type-animation'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import imgBanner1 from '../../assets/banner-shopping-1.jpg'
 import imgBanner2 from '../../assets/banner-shopping-2.jpg'
@@ -14,6 +15,24 @@ import { FaXTwitter } from 'react-icons/fa6'
 function BannerSection () {
   const context = useContext(myContext)
   const { mode } = context
+
+  const user = JSON.parse(localStorage.getItem('user'))
+  // console.log(user)
+
+  const navigate = useNavigate()
+
+  const login = () => {
+    navigate('/login')
+  }
+
+  const signup = () => {
+    navigate('/signup')
+  }
+
+  const logout = () => {
+    localStorage.clear('user')
+    navigate('/login')
+  }
 
   return (
     <section className='items-center'>
@@ -47,18 +66,23 @@ function BannerSection () {
               viewport={{ once: false, amount: 0.7 }}
               className='mb-6 text-[25px] lg:text-[50px] font-semibold leading-[1]'
             >
-              <span className='mr-4'>HELLO</span>
               <TypeAnimation
                 sequence={[
-                  'Admin',
+                  'HELLO',
                   2000,
-                  'Edgar',
+                  `${user ? user.user.email : 'Login...'}`,
+                  2000,
+                  'Explore...',
+                  2000,
+                  'Check...',
+                  2000,
+                  'Have fun in...',
                   2000,
                   'eSagom',
                   2000
                 ]}
                 speed={50}
-                className='text-orange-600'
+                className='text-orange-800 font-extrabold'
                 wrapper='span'
                 repeat={Infinity}
               />
@@ -75,15 +99,37 @@ function BannerSection () {
               Join the thousands of people who are shopping here.
             </motion.p>
 
-            <motion.div
-              variants={fadeIn('up', 0.6)} initial='hidden'
-              whileInView='show'
-              viewport={{ once: false, amount: 0.7 }}
-              className='flex max-w-max gap-x-6 items-center mb-8 mx-auto lg:mx-0'
-            >
-              <button className='bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 opacity-50 rounded-full'>Login</button>
-              <button className='bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 opacity-50 rounded-full'>Logout</button>
-            </motion.div>
+            {!user
+              ? <motion.div
+                  variants={fadeIn('up', 0.6)} initial='hidden'
+                  whileInView='show'
+                  viewport={{ once: false, amount: 0.7 }}
+                  className='flex max-w-max gap-x-6 items-center mb-8 mx-auto lg:mx-0'
+                >
+                <button
+                  onClick={login}
+                  className='bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 opacity-70 rounded-full'
+                >Login
+                </button>
+
+                <button
+                  onClick={signup}
+                  className='bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 opacity-70 rounded-full'
+                >Signup
+                </button>
+              </motion.div>
+              : <motion.div
+                  variants={fadeIn('up', 0.6)} initial='hidden'
+                  whileInView='show'
+                  viewport={{ once: false, amount: 0.7 }}
+                  className='flex max-w-max gap-x-6 items-center mb-8 mx-auto lg:mx-0'
+                >
+                <button
+                  onClick={logout}
+                  className='bg-orange-600 hover:bg-orange-800 text-white font-bold py-2 px-4 opacity-70 rounded-full'
+                >Logout
+                </button>
+              </motion.div>}
 
             {/* Socials */}
             <motion.div

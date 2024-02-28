@@ -9,6 +9,8 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Loader from '../../components/loader/Loader'
 
+import logoImg from '../../../public/logo-eSagom.png'
+
 function Signup () {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -51,6 +53,10 @@ function Signup () {
     <div className=' flex justify-center items-center h-screen bg-orange-600'>
       {loading && <Loader />}
       <div className=' bg-gray-800 px-10 py-10 rounded-xl hover:shadow-orange-800 hover:shadow-2xl transition-shadow duration-300 ease-in-out'>
+        <Link to='/' className='flex justify-center mb-4'>
+          <img src={logoImg} alt='Logo eSagom' className='w-16 h-12' />
+          <h1 className=' text-2xl font-bold text-orange-600 py-1 rounded'>eSagom</h1>
+        </Link>
         <div className=''>
           <h1 className='text-center text-white text-xl mb-4 font-bold'>Signup</h1>
         </div>
